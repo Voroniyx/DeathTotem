@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "deathtotemmod",
+  "version": "${version}",
+  "name": "DeathTotem",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/deathtotem/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "xyz.voroniyx.deathtotem.DeathTotemMod"
+    ]
+  },
+  "mixins": [
+    "deathtotem.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
