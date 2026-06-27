@@ -1,8 +1,10 @@
 package xyz.voroniyx.deathtotem;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import xyz.voroniyx.deathtotem.commands.ConfigCommand;
 import xyz.voroniyx.deathtotem.config.JsonConfigManager;
 import xyz.voroniyx.deathtotem.config.ModConfig;
 
@@ -21,6 +23,8 @@ public class DeathTotemMod implements ModInitializer {
         LOGGER.info("DeathTotemMod Initializing");
 
         loadConfig();
+
+        registerCommands();
     }
 
     public void loadConfig() {
@@ -31,5 +35,17 @@ public class DeathTotemMod implements ModInitializer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void registerCommands() {
+        CommandRegistrationCallback.EVENT.register(
+                (
+                        commandDispatcher,
+                        commandBuildContext,
+                        commandSelection
+                ) -> {
+                    new ConfigCommand().register(commandDispatcher);
+                }
+        );
     }
 }

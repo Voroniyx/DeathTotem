@@ -16,7 +16,7 @@ public abstract class LivingEntityMixin {
             at = @At("RETURN")
     )
     private void deathtotem$onTotemPop(
-            DamageSource source,
+            DamageSource killingDamage,
             CallbackInfoReturnable<Boolean> cir
     ) {
         if (!cir.getReturnValue()) return;
