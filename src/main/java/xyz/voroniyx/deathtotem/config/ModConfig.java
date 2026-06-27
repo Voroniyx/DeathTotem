@@ -20,7 +20,7 @@ public class ModConfig {
         return dataDirectory.resolve("death_totem.json").toString();
     }
 
-    public class PlayerOverrides {
+    public static class PlayerOverrides {
         public PlayerOverrides(UUID playerUUID) {
             PlayerUUID = playerUUID;
         }
@@ -82,8 +82,5 @@ public class ModConfig {
         return updated;
     }
 
-    public void DeletePlayerOverride(UUID playerUUID, String option) {
-
-    }
 }
 

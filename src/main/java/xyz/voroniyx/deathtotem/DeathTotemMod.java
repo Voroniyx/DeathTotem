@@ -41,8 +41,8 @@ public class DeathTotemMod implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(
                 (
                         commandDispatcher,
-                        commandBuildContext,
-                        commandSelection
+                        _,
+                        _
                 ) -> {
                     new ConfigCommand().register(commandDispatcher);
                 }
