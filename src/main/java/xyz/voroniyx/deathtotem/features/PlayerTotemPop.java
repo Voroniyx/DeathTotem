@@ -13,7 +13,12 @@ import xyz.voroniyx.deathtotem.mixin_interfaces.IChunkMapMixin;
 
 public class PlayerTotemPop {
     public static void handle(ServerPlayer player) {
-        if(!DeathTotemMod.CONFIG.getData().EnableTotemConsume) {
+        var playerUUID = player.getUUID();
+
+        boolean hasEnableOverride = DeathTotemMod.CONFIG.getData().HasActiveEnableTotemConsumeOverwriteThatIsTrue(playerUUID);
+        boolean globalEnable = DeathTotemMod.CONFIG.getData().EnableTotemConsume;
+
+        if (!hasEnableOverride && !globalEnable) {
             return;
         }
 
@@ -21,7 +26,15 @@ public class PlayerTotemPop {
         String playerName = player.getName().getString();
 
         var hasTotemInInv = player.getInventory().contains(x -> x.is(Items.TOTEM_OF_UNDYING));
-        if(hasTotemInInv && DeathTotemMod.CONFIG.getData().TotemConsumeOnlyWhenLastTotemUsed) {
+
+        var consumeWhenLastTotemUsedPlayerOverride = DeathTotemMod.CONFIG.getData().GetTotemConsumeOnlyWhenLastTotemUsedOverwrite(playerUUID);
+        var consumeWhenLastTotemUsedGlobal = DeathTotemMod.CONFIG.getData().TotemConsumeOnlyWhenLastTotemUsed;
+
+        boolean finalConsumeWhenLastOnly = (consumeWhenLastTotemUsedPlayerOverride != null)
+                ? consumeWhenLastTotemUsedPlayerOverride
+                : consumeWhenLastTotemUsedGlobal;
+
+        if (hasTotemInInv && finalConsumeWhenLastOnly) {
             return;
         }
 
