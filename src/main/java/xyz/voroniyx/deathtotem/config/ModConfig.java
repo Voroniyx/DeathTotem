@@ -8,6 +8,8 @@ public class ModConfig {
     public boolean EnableTotemConsume = true;
     public boolean TotemConsumeOnlyWhenLastTotemUsed = true;
 
+    public boolean EnableBetterFishingHookFeature = false;
+
     public static String GetConfigPath() {
         Path dataDirectory = FabricLoader.getInstance().getConfigDir();
         return dataDirectory.resolve("death_totem.json").toString();

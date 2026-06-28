@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import xyz.voroniyx.deathtotem.DeathTotemMod;
 import xyz.voroniyx.deathtotem.features.better_fishing_hook.FishingRedstoneData;
 
 import java.util.List;
@@ -29,6 +30,10 @@ import java.util.List;
 public class FishingHookMixin {
     @Inject(method = "onHitBlock", at = @At("TAIL"))
     private void onTargetBlockHit(BlockHitResult hitResult, CallbackInfo ci) {
+        if (!DeathTotemMod.CONFIG.getData().EnableBetterFishingHookFeature) {
+            return;
+        }
+
         FishingHook bobber = (FishingHook) (Object) this;
 
         if (!bobber.level().isClientSide() && bobber.getOwner() instanceof Player player) {
@@ -49,6 +54,10 @@ public class FishingHookMixin {
 
     @Inject(method = "retrieve", at = @At("HEAD"))
     private void onReelIn(ItemStack rod, CallbackInfoReturnable<Integer> cir) {
+        if (!DeathTotemMod.CONFIG.getData().EnableBetterFishingHookFeature) {
+            return;
+        }
+
         FishingHook bobber = (FishingHook) (Object) this;
         Entity owner = bobber.getOwner();
 
