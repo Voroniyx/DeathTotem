@@ -2,13 +2,19 @@
   "schemaVersion": 1,
   "id": "deathtotemmod",
   "version": "${version}",
-  "name": "DeathTotem",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "name": "Totem in a Barrel",
+  "description": "The Mod, to finally teleport on totem pop aka. a totem stasis like UU has them.",
+  "authors": [
+    "Voroniyx"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/totem-in-barrel",
+    "sources": "https://github.com/Voroniyx/DeathTotem/",
+    "issues": "https://github.com/Voroniyx/DeathTotem/issues/"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/deathtotem/icon.png",
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "xyz.voroniyx.deathtotem.DeathTotemMod"
