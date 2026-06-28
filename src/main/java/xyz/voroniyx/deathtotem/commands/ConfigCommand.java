@@ -39,11 +39,11 @@ public class ConfigCommand extends BaseCommand {
             var saved = DeathTotemMod.CONFIG.saveSave();
 
             if (!saved) {
-                source.sendSystemMessage(Component.literal("Could not persist new value. After next restart, it might be gone :(").withColor(TextColor.RED));
+                source.sendSystemMessage(Component.literal("Could not persist new value. After next restart, it might be gone :(").withStyle(ChatFormatting.RED));
                 return 1;
             }
 
-            source.sendSystemMessage(Component.literal("Successfully set \"EnableTotemConsume\" to " + newValue).withColor(TextColor.GRAY));
+            source.sendSystemMessage(Component.literal("Successfully set \"EnableTotemConsume\" to " + newValue).withStyle(ChatFormatting.GRAY));
 
             return 1;
         } catch (Exception ex) {
@@ -63,11 +63,11 @@ public class ConfigCommand extends BaseCommand {
             var saved = DeathTotemMod.CONFIG.saveSave();
 
             if (!saved) {
-                source.sendSystemMessage(Component.literal("Could not persist new value. After next restart, it might be gone :(").withColor(TextColor.RED));
+                source.sendSystemMessage(Component.literal("Could not persist new value. After next restart, it might be gone :(").withStyle(ChatFormatting.RED));
                 return 1;
             }
 
-            source.sendSystemMessage(Component.literal("Successfully set \"TotemConsumeOnlyWhenLastTotemUsed\" to " + newValue).withColor(TextColor.GRAY));
+            source.sendSystemMessage(Component.literal("Successfully set \"TotemConsumeOnlyWhenLastTotemUsed\" to " + newValue).withStyle(ChatFormatting.GRAY));
 
             return 1;
         } catch (Exception ex) {
@@ -143,18 +143,18 @@ public class ConfigCommand extends BaseCommand {
             var success = config.AddOrUpdatePlayerOverride(player.getUUID(), option, newValue);
 
             if (!success) {
-                source.sendSystemMessage(Component.literal("Could not add player override. Please try again.").withColor(TextColor.RED));
+                source.sendSystemMessage(Component.literal("Could not add player override. Please try again.").withStyle(ChatFormatting.RED));
                 return 1;
             }
 
             var saved = DeathTotemMod.CONFIG.saveSave();
 
             if (!saved) {
-                source.sendSystemMessage(Component.literal("Could not persist player overwrite. After next restart, it might be gone :(").withColor(TextColor.RED));
+                source.sendSystemMessage(Component.literal("Could not persist player overwrite. After next restart, it might be gone :(").withStyle(ChatFormatting.RED));
                 return 1;
             }
 
-            source.sendSystemMessage(Component.literal("Successfully set \"" + option + "\" to " + newValue + " for player: " + player.getPlainTextName()).withColor(TextColor.GRAY));
+            source.sendSystemMessage(Component.literal("Successfully set \"" + option + "\" to " + newValue + " for player: " + player.getPlainTextName()).withStyle(ChatFormatting.GRAY));
 
             return 1;
         } catch (Exception ex) {
