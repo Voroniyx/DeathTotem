@@ -1,0 +1,52 @@
+# The Barrel Totem Mod
+With this mod, you can place a single totem **with your name** in a barrel and consume it when you activate a totem.
+
+## How it works
+If a players totem pops and simultaneously placed a totem with their name in a barrel, and the chunk containing the barrel is loaded, the totem in the barrel is consumed, emptying the barrel and stopping the redstone signal emitted by the barrel. In combination with a stasis chamber, this can trigger a trapdoor, which then triggers the trapdoor and transports the player into the stasis chamber.
+An example of such a configuration can be found in the gallery.
+
+## Configuration
+
+### Config Command
+*Only available in version 1.3.0+*
+
+You can manage all settings via the new command `/tiab <subcommand> <...options>`
+
+#### Sub Commands
+- `... config <Get|EnableTotemConsume|TotemConsumeOnlyWhenLastTotemUsed> [true|false]`
+- `... override <player> <EnableTotemConsume|TotemConsumeOnlyWhenLastTotemUsed> <true|false>`
+
+Default config:
+```json
+{
+  "EnableTotemConsume": true,
+  "TotemConsumeOnlyWhenLastTotemUsed": true,
+  "EnableBetterFishingHookFeature": false
+}
+```
+| Variable                          | Default value | Description                                                                                      |
+|-----------------------------------|---------------|--------------------------------------------------------------------------------------------------|
+| EnableTotemConsume                | true          | When `true` enables the mod                                                                      |
+| TotemConsumeOnlyWhenLastTotemUsed | true          | When `true`, the totem in the barrel will only be consumed when the players last totem poped     |
+| EnableBetterFishingHookFeature    | false         | When `true`, a fishing rod can be linked to a target block and remotly trigger a redstone signal |
+
+## Optional Features
+These features are completely optional and are disabled by default
+
+<details>
+<summary>Better fishing hook</summary>
+This feature can not be enabled through the in-game config commands.
+
+<b>This feature can be used not only for stasis chambers but also for any other Redstone contraption, which may be game-breaking for some players<b>
+
+If <code>EnableBetterFishingHookFeature</code> is set to <code>true</code> in the configuration file, a fishing rod can be used on a target block. 
+
+This fishing rod is then *linked* to the target block. This is indicated by the target block's position being listed in the fishing rod's lore.
+
+If the fishing rod is used again, the linked target block emits a Redstone signal with a strength of <code>15</code>, the fishing rod 
+takes <code>1</code> damage, and the link between the block and the rod is broken and must be reestablished.
+
+This can be used to create fishing rod stasis chambers directly in your base without using a Nether portal or unloaded chunks.
+The connection remains active even between reconnections and server restarts.
+
+</details>
