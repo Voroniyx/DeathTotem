@@ -37,7 +37,7 @@ These features are completely optional and are disabled by default
 <summary>Better fishing hook</summary>
 This feature can not be enabled through the in-game config commands.
 
-<b>This feature can be used not only for stasis chambers but also for any other Redstone contraption, which may be game-breaking for some players<b>
+<b>This feature can be used not only for stasis chambers but also for any other Redstone contraption, which may be game-breaking for some players</b>
 
 If <code>EnableBetterFishingHookFeature</code> is set to <code>true</code> in the configuration file, a fishing rod can be used on a target block. 
 
