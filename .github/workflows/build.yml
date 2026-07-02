@@ -1,77 +1,45 @@
-name: Build Fabric Mod
+name: Build
+
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   build:
+    name: Build Fabric mod & Paper plugin
     runs-on: ubuntu-latest
-    permissions:
-      deployments: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create deployment
-        id: deployment
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const deployment = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha,
-              environment: 'build',
-              auto_merge: false,
-              required_contexts: []
-            });
-            return deployment.data.id;
-
-      - name: Set up JDK
+      - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '25'
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build mod
-        run: ./gradlew build
+      - name: Build all platforms
+        run: ./gradlew build --stacktrace
 
-      - name: Upload mod artifact
+      - name: Upload Fabric mod
         uses: actions/upload-artifact@v4
         with:
           name: fabric-mod
-          path: build/libs/*.jar
+          path: fabric/build/libs/*.jar
+          if-no-files-found: error
 
-      - name: Set deployment status (success)
-        if: success()
-        uses: actions/github-script@v7
+      - name: Upload Paper plugin
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: ${{ steps.deployment.outputs.result }},
-              state: 'success',
-              description: 'Build completed successfully'
-            });
-
-      - name: Set deployment status (failure)
-        if: failure()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: ${{ steps.deployment.outputs.result }},
-              state: 'failure',
-              description: 'Build failed'
-            });
+          name: paper-plugin
+          path: |
+            paper/build/libs/*.jar
+            !paper/build/libs/*-dev.jar
+          if-no-files-found: error
