@@ -1,7 +1,5 @@
 package xyz.voroniyx.deathtotem.config;
 
-import net.fabricmc.loader.api.FabricLoader;
-
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.UUID;
@@ -15,9 +13,8 @@ public class ModConfig {
         PlayerOverrides = new HashSet<>();
     }
 
-    public static String GetConfigPath() {
-        Path dataDirectory = FabricLoader.getInstance().getConfigDir();
-        return dataDirectory.resolve("death_totem.json").toString();
+    public static String GetConfigPath(Path configDir) {
+        return configDir.resolve("death_totem.json").toString();
     }
 
     public static class PlayerOverrides {

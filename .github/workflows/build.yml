@@ -1,10 +1,10 @@
-name: Build Fabric Mod
+name: Build Fabric Mod & Paper Plugin
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "feat/add_paper_version" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "feat/add_paper_version" ]
   workflow_dispatch:
 
 jobs:
@@ -41,14 +41,20 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build mod
+      - name: Build all platforms
         run: ./gradlew build
 
-      - name: Upload mod artifact
+      - name: Upload Fabric mod artifact
         uses: actions/upload-artifact@v4
         with:
           name: fabric-mod
-          path: build/libs/*.jar
+          path: fabric/build/libs/*.jar
+
+      - name: Upload Paper plugin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-plugin
+          path: paper/build/libs/*.jar
 
       - name: Set deployment status (success)
         if: success()

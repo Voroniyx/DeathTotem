@@ -2,6 +2,7 @@ package xyz.voroniyx.deathtotem;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import xyz.voroniyx.deathtotem.commands.ConfigCommand;
@@ -28,7 +29,7 @@ public class DeathTotemMod implements ModInitializer {
     }
 
     public void loadConfig() {
-        CONFIG = new JsonConfigManager<>(ModConfig.class, ModConfig.GetConfigPath());
+        CONFIG = new JsonConfigManager<>(ModConfig.class, ModConfig.GetConfigPath(FabricLoader.getInstance().getConfigDir()));
         try {
             CONFIG.load();
             CONFIG.save();
