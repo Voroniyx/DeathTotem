@@ -32,7 +32,7 @@ public final class PaperTotemPop {
 
         String playerName = player.getName();
 
-        boolean hasTotemInInv = player.getInventory().contains(Material.TOTEM_OF_UNDYING);
+        boolean hasTotemInInv = hasTotemInInventory(player);
 
         Boolean consumeWhenLastOverride = config.GetTotemConsumeOnlyWhenLastTotemUsedOverwrite(playerUUID);
         boolean finalConsumeWhenLastOnly = (consumeWhenLastOverride != null)
@@ -77,6 +77,16 @@ public final class PaperTotemPop {
                 }
             }
         }
+    }
+
+    private static boolean hasTotemInInventory(Player player) {
+        for (ItemStack stack : player.getInventory().getStorageContents()) {
+            if (stack != null && stack.getType() == Material.TOTEM_OF_UNDYING) {
+                return true;
+            }
+        }
+
+        return player.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING;
     }
 
     private static int indexOfOnlySingleTotem(Inventory inventory) {
