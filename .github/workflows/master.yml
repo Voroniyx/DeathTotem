@@ -1,0 +1,55 @@
+name: Master
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: master
+  cancel-in-progress: false
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deployment:
+    name: Record deployment status
+    needs: build
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+    steps:
+      - name: Report build result as a deployment
+        uses: actions/github-script@v7
+        env:
+          BUILD_RESULT: ${{ needs.build.result }}
+        with:
+          script: |
+            const ok = process.env.BUILD_RESULT === 'success';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'build',
+              auto_merge: false,
+              required_contexts: [],
+              transient_environment: true,
+              description: 'CI build of master',
+            });
+
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: ok ? 'success' : 'failure',
+              description: ok ? 'Build completed successfully' : 'Build failed',
+              log_url: runUrl,
+              environment_url: runUrl,
+            });
